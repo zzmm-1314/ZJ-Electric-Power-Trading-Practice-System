@@ -123,11 +123,11 @@ const error = ref('');
 async function loadPapers() {
   try {
     papers.value = await api.getPapers();
-    // 编辑模式：回填已选试卷
     if (isEdit.value && props.question?.paper_id) {
       form.paper_id = props.question.paper_id;
-    } else if (papers.value.length > 0 && form.paper_id === null) {
-      form.paper_id = papers.value[0].id;
+    } else if (form.paper_id === null) {
+      const first = papers.value[0];
+      if (first) form.paper_id = first.id;
     }
   } catch (e) {
     console.error('加载试卷失败', e);

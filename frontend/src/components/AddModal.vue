@@ -124,8 +124,9 @@ const error = ref('');
 async function loadPapers() {
     try {
         papers.value = await api.getPapers();
-        if (papers.value.length > 0 && form.paper_id === null) {
-            form.paper_id = papers.value[0].id;
+        if (form.paper_id === null) {
+            const first = papers.value[0];
+            if (first) form.paper_id = first.id;
         }
     } catch (e) {
         console.error('加载试卷失败', e);
@@ -142,6 +143,8 @@ async function loadKnowledgePoints() {
 
 // 提交
 const submitAdd = async () => {
+    // 把 payload 定义提前，让 catch 块也能访问
+    let payload: any = null;
     try {
         if (!form.content.trim()) { error.value = '请输入题目内容'; return; }
         if (['single_choice', 'multiple_choice', 'true_false'].includes(form.type)) {

@@ -2,8 +2,8 @@ import axios from 'axios';
 import type { Question, DisplayQuestion, SheetData, PageResult, ImportResult } from '@/types';
 
 const api = axios.create({
-    baseURL: '/api',
-    timeout: 10000,
+    baseURL: '/api',                  // 保持即可（同源）
+    timeout: 30000,                   // 大模型对话较慢，改大一点
 });
 // 请求拦截器 - 打印请求信息
 api.interceptors.request.use(

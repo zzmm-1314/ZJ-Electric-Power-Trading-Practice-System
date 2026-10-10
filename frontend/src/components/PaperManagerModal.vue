@@ -129,7 +129,8 @@ async function deletePaper(p: Paper) {
         await paperStore.reloadPapers();
         // 若删除的是当前选中试卷，切换为第一张或 null
         if (paperStore.selectedPaperId === p.id) {
-            const firstId = papers.value.length > 0 ? papers.value[0].id : null;
+            const first = papers.value[0];
+            const firstId = first ? first.id : null;
             await paperStore.setPaper(firstId);
         }
         emit('changed');

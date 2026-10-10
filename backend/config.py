@@ -1,7 +1,16 @@
 import os
 from dotenv import load_dotenv
+import sys
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def _external_dir() -> str:
+    """exe 所在目录（打包后）或脚本所在目录（开发时）"""
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+BASE_DIR = _external_dir()
 
 # 优先加载同目录下的 .env；override=False 表示已存在的环境变量优先
 load_dotenv(os.path.join(BASE_DIR, ".env"), override=False)
@@ -54,3 +63,19 @@ TYPE_NAMES = {
     "calculation": "计算题",
     "essay": "解答题",
 }
+_ENV_PATH = os.path.join(BASE_DIR, ".env")
+if not os.path.exists(_ENV_PATH):
+    with open(_ENV_PATH, "w", encoding="utf-8") as f:
+        f.write(
+            "# 首次启动自动生成，请按需修改后重启\n"
+            "MYSQL_HOST=localhost\n"
+            "MYSQL_USER=root\n"
+            "MYSQL_PASSWORD=\n"
+            "MYSQL_DB=exam_db\n"
+            "MYSQL_PORT=3306\n"
+            "\n"
+            "ZHIPU_API_KEY=\n"
+            "ZHIPU_MODEL=glm-4.7-flash\n"
+            "ZHIPU_RETRY_COUNT=7\n"
+            "ZHIPU_RETRY_DELAY=2\n"
+        )

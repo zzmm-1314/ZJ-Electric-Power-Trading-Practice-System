@@ -21,7 +21,7 @@
                     <li v-for="type in typeList" :key="type" :class="{ active: selectedType === type }"
                         @click="selectType(type)">
                         {{ typeMap[type] || type }}
-                        <span class="count">({{ groupedData[type].length }})</span>
+                        <span class="count">({{ groupedData[type]?.length ?? 0 }})</span>
                     </li>
                 </ul>
             </div>
@@ -104,7 +104,7 @@ async function loadReport() {
         const data = await api.getWrongReport(paperStore.selectedPaperId ?? undefined);
         reportData.value = data;
         if (typeList.value.length > 0) {
-            selectedType.value = typeList.value[0];
+            selectedType.value = typeList.value[0] ?? '';
         }
     } catch (e: any) {
         error.value = e.response?.data?.error || '加载失败';

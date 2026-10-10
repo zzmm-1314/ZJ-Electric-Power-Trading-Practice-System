@@ -12,6 +12,7 @@ export default defineConfig({
     vueJsx(),
     vueDevTools(),
   ],
+  base: './',                        // ← 关键：用相对路径
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

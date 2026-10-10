@@ -100,7 +100,7 @@ git status          # 确认没有 node_modules / .venv / .env
 git commit -m "chore: 初始化项目"
 
 # 4. 关联远程（已存在 origin 时用 set-url）
-git remote add origin https://github.com/anye13/ZJ-Electric-Power-Trading-Practice-System.git
+git remote add origin https://github.com/zzmm-1314/ZJ-Electric-Power-Trading-Practice-System.git
 # 若报 remote origin already exists：
 # git remote set-url origin https://github.com/anye13/ZJ-Electric-Power-Trading-Practice-System.git
 
@@ -122,11 +122,11 @@ git push origin main --force
 
 **`git add .` 与 `git add -A` 的区别**（之前"只推了新文件"就是踩了这个）：
 
-| 命令 | 新增 | 修改 | 删除 |
-|---|---|---|---|
-| `git add .` | ✅ | ✅ | ❌ |
-| `git add -u` | ❌ | ✅ | ✅ |
-| `git add -A` | ✅ | ✅ | ✅ |
+| 命令           | 新增 | 修改 | 删除 |
+| -------------- | ---- | ---- | ---- |
+| `git add .`  | ✅   | ✅   | ❌   |
+| `git add -u` | ❌   | ✅   | ✅   |
+| `git add -A` | ✅   | ✅   | ✅   |
 
 若被分支保护拦下（`GH006: Protected branch update failed`）：
 GitHub → 仓库 Settings → Branches → 删除或暂时关闭 `main` 的保护规则，推完再开。
@@ -393,18 +393,18 @@ Host github.com
 
 | 操作               | 命令                                     |
 | ------------------ | ---------------------------------------- |
-| 看远程地址         | `git remote -v`                          |
-| 改远程地址         | `git remote set-url origin <新地址>`     |
-| 看状态             | `git status`                             |
-| 看提交历史         | `git log --oneline`                      |
-| 看当前分支         | `git branch`                             |
-| 拉取最新           | `git pull`                               |
-| 推送               | `git push`                               |
-| 强制覆盖远程       | `git push origin main --force`           |
-| 撤销 add（未提交） | `git restore --staged .`                 |
-| 查看某文件改动     | `git diff <文件名>`                      |
-| 列出已跟踪文件     | `git ls-files`                           |
-| 搜敏感关键词       | `git grep -n -i -E "password\|api_key"`  |
+| 看远程地址         | `git remote -v`                        |
+| 改远程地址         | `git remote set-url origin <新地址>`   |
+| 看状态             | `git status`                           |
+| 看提交历史         | `git log --oneline`                    |
+| 看当前分支         | `git branch`                           |
+| 拉取最新           | `git pull`                             |
+| 推送               | `git push`                             |
+| 强制覆盖远程       | `git push origin main --force`         |
+| 撤销 add（未提交） | `git restore --staged .`               |
+| 查看某文件改动     | `git diff <文件名>`                    |
+| 列出已跟踪文件     | `git ls-files`                         |
+| 搜敏感关键词       | `git grep -n -i -E "password\|api_key"` |
 
 ---
 

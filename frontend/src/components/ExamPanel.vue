@@ -219,15 +219,14 @@ const mobileSheetOpen = ref(false);
 const displayOrder = computed<number[]>(() => {
   const groups: Record<string, SheetItem[]> = {};
   store.sheetData.items.forEach(item => {
-    if (!groups[item.type]) groups[item.type] = [];
-    groups[item.type].push(item);
+    (groups[item.type] ??= []).push(item);
   });
 
   const order: number[] = [];
   typeOrder.forEach(type => {
-    if (groups[type] && groups[type].length > 0) {
-      const sorted = [...groups[type]].sort((a, b) => a.pos - b.pos);
-      sorted.forEach(item => order.push(item.pos));
+    const list = groups[type];
+    if (list && list.length > 0) {
+      [...list].sort((a, b) => a.pos - b.pos).forEach(item => order.push(item.pos));
     }
   });
   return order;
@@ -239,15 +238,15 @@ const currentDisplayIndex = computed<number>(() => {
 const groupedSheet = computed(() => {
   const groups: Record<string, SheetItem[]> = {};
   store.sheetData.items.forEach(item => {
-    if (!groups[item.type]) groups[item.type] = [];
-    groups[item.type].push(item);
+    (groups[item.type] ??= []).push(item);
   });
 
   let counter = 1;
   const result: Array<{ type: string; items: Array<SheetItem & { displayNumber: number }> }> = [];
   typeOrder.forEach(type => {
-    if (groups[type] && groups[type].length > 0) {
-      const sorted = [...groups[type]].sort((a, b) => a.pos - b.pos);
+    const list = groups[type];
+    if (list && list.length > 0) {
+      const sorted = [...list].sort((a, b) => a.pos - b.pos);
       const items = sorted.map(item => ({
         ...item,
         displayNumber: counter++,
@@ -349,14 +348,20 @@ async function checkModeSelection() {
 async function handlePrev() {
   const idx = currentDisplayIndex.value;
   if (idx > 0) {
-    await store.jumpTo(displayOrder.value[idx - 1]);
+    const pos = displayOrder.value[idx - 1];
+    if (pos !== undefined) {
+      await store.jumpTo(pos);
+    }
   }
 }
 
 async function handleNext() {
   const idx = currentDisplayIndex.value;
   if (idx >= 0 && idx + 1 < displayOrder.value.length) {
-    await store.jumpTo(displayOrder.value[idx + 1]);
+    const pos = displayOrder.value[idx + 1];
+    if (pos !== undefined) {
+      await store.jumpTo(pos);
+    }
   }
 }
 

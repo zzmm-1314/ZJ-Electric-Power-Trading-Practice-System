@@ -14,6 +14,13 @@ import re
 import jieba
 import os
 
+
+def _external_dir() -> str:
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.abspath(__file__))
+
+
 # 停用词（可按需扩展）
 STOP_WORDS = set(
     [
@@ -84,14 +91,10 @@ STOP_WORDS = set(
     ]
 )
 # ============ 数据库配置文件（用户可覆盖 config.py 中的默认值） ============
-DB_CONFIG_FILE = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "db_config.json"
-)
+DB_CONFIG_FILE = os.path.join(_external_dir(), "db_config.json")
 _db_config_cache = None
 # ============ AI 配置文件 ============
-AI_CONFIG_FILE = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "ai_config.json"
-)
+AI_CONFIG_FILE = os.path.join(_external_dir(), "ai_config.json")
 
 _ai_config_cache = None
 

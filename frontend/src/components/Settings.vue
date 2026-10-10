@@ -235,9 +235,19 @@ const aiConfig = ref<AiConfig>({ active_id: null, providers: [] });
 const aiPresets = ref<AiProviderPreset[]>([]);
 const aiFormVisible = ref(false);
 const aiEditingId = ref<string | null>(null);
-const aiForm = ref({
+const aiForm = ref<{
+    name: string;
+    provider: string;
+    sdk: string;         // ← 新增
+    api_key: string;
+    model: string;
+    base_url: string;
+    retry_count: number;
+    retry_delay: number;
+}>({
     name: '',
     provider: 'zhipu',
+    sdk: 'zhipu',        // ← 新增
     api_key: '',
     model: 'glm-4.7-flash',
     base_url: '',
@@ -392,7 +402,7 @@ onMounted(async () => {
     else selectedMode.value = store.filterWrong;
 
     // 加载题目数量
-    limit.value = store.practiceLimit || 20;
+    limit.value = store.practiceLimit ?? 20;
 
     // 加载清理天数
     try {

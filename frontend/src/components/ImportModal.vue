@@ -60,8 +60,9 @@ const selectedPaperId = ref<number | null>(null);
 async function loadPapers() {
   try {
     papers.value = await api.getPapers();
-    if (papers.value.length > 0 && selectedPaperId.value === null) {
-      selectedPaperId.value = papers.value[0].id;
+    if (selectedPaperId.value === null) {
+      const first = papers.value[0];
+      if (first) selectedPaperId.value = first.id;
     }
   } catch (e) {
     console.error('加载试卷失败', e);

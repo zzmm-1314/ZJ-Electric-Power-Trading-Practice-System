@@ -76,8 +76,7 @@ export const useExamStore = defineStore('exam', () => {
     const sheetGroups = computed(() => {
         const groups: Record<string, SheetItem[]> = {};
         sheetData.value.items.forEach(item => {
-            if (!groups[item.type]) groups[item.type] = [];
-            groups[item.type].push(item);
+            (groups[item.type] ??= []).push(item);
         });
         return groups;
     });
@@ -378,5 +377,6 @@ export const useExamStore = defineStore('exam', () => {
         resetAll,
         reloadQuestions,
         focusMode,
+        practiceLimit,
     };
 });
