@@ -40,3 +40,7 @@ Thumbs.db
 
 # 其他
 instruction.md
+打包步骤.md
+make_ico.py
+reset_ids.py
+test.py
